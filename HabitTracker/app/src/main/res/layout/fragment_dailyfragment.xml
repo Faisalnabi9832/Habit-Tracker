@@ -1,0 +1,113 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteTextColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="20dp"
+            android:hint="@string/enter_description"
+            android:gravity="top|start"
+            android:textColorHint="@android:color/darker_gray"
+            android:background="@color/halfwhite" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Date"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/editTextStartDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/select_start_date"
+                android:textColorHint="@android:color/darker_gray"
+                android:layout_marginTop="8dp"
+                android:inputType="none"
+                android:focusable="false"
+                android:background="@android:drawable/editbox_background"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/end_date"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/editTextEndDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/select_end_date"
+                android:textColorHint="@android:color/darker_gray"
+                android:layout_marginTop="8dp"
+                android:inputType="none"
+                android:focusable="false"
+                android:background="@android:drawable/editbox_background"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/notification"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_recycler"
+                android:layout_width="50dp"
+                android:padding="8dp"
+                android:layout_height="wrap_content"
+                 android:text="@string/plus"
+                android:textColor="@color/whiteTextColor"
+                android:background="@drawable/custom_switch_track"
+                android:layout_marginStart="8dp"/>
+
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclertimer"/>
+
+
+    </LinearLayout>
+
+</FrameLayout>

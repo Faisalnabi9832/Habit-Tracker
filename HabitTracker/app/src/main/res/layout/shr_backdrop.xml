@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/all_products"
+        android:backgroundTint="@color/colorPrimaryDark"
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ALL PRODUCTS" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/featured"
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/shr_featured_label"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/apartment"
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_height="wrap_content"
+        android:text="@string/shr_apartment_label" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/accessories"
+        style="@style/Widget.Shrine.Button.TextButton"
+
+        android:layout_width="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_height="wrap_content"
+        android:text="@string/shr_accessories_label" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/shoes"
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_height="wrap_content"
+        android:text="@string/shr_shoes_label" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/tops"
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_height="wrap_content"
+        android:text="@string/shr_tops_label" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottoms"
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="@string/shr_bottoms_label" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dress"
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_height="wrap_content"
+        android:text="@string/shr_dresses_label" />
+
+    <View
+        android:layout_width="56dp"
+        android:layout_height="1dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_margin="16dp"
+        android:background="?android:attr/textColorPrimary" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="@string/shr_account_label" />
+
+</merge>

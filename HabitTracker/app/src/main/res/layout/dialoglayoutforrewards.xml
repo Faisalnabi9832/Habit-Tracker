@@ -1,0 +1,96 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/whiteTextColor"
+    android:padding="16dp">
+
+    <!-- Include the custom title layout -->
+    <include layout="@layout/titlelayoutfordialog"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_gravity="center_vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="count to win"
+            android:textSize="16sp"
+            android:layout_weight="1.7"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/editTextcount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.3"
+            android:hint="@string/count"
+            android:textColorHint="@android:color/darker_gray"
+
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1.7"
+            android:text="Reward Title"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/editTextrewardtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.3"
+            android:background="@android:drawable/editbox_background"
+            android:hint="@string/title"
+            android:textColorHint="@android:color/darker_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_gravity="center_vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_description"
+            android:textSize="16sp"
+            android:layout_weight="1.7"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/editTexttaskDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.3"
+            android:hint="@string/enter_description"
+            android:textColorHint="@android:color/darker_gray"
+
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+</LinearLayout>
