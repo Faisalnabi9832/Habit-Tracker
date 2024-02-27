@@ -80,7 +80,9 @@ public class LoginActivity extends BaseActivity<LoginView,LoginPresenter> implem
 
         int id = v.getId();
         if (id == R.id.btn_login) {
-            presenter.authenticate();
+//            presenter.authenticate();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
 
 
 

@@ -22,6 +22,7 @@ import com.regexbyte.habittracker.Addhabit.Addhabitactivity;
 import com.regexbyte.habittracker.Base.BaseActivity;
 import com.regexbyte.habittracker.Models.HabitData;
 import com.regexbyte.habittracker.NavigationIconClickListener;
+import com.regexbyte.habittracker.NewsfeedActivity;
 import com.regexbyte.habittracker.R;
 import com.regexbyte.habittracker.Utils.RecyclerItemTouchHelper;
 import java.util.ArrayList;
@@ -125,6 +126,12 @@ public class MainActivity extends BaseActivity<HabitView, HabitPresenter> implem
             doThis(item);
             openAddHabitActivity();
             return true;
+        } else if (selectedMenuIdString.equals("Filter")) {
+            doThis(item);
+            Intent intent = new Intent(this, NewsfeedActivity.class);
+            startActivity(intent);
+
+
         }
         return true;
     }

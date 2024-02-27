@@ -50,6 +50,8 @@ dependencies {
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+
     implementation ("androidx.appcompat:appcompat:1.4.1")
 
 

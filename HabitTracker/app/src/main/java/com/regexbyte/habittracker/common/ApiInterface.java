@@ -1,4 +1,4 @@
-package com.regexbyte.habittracker;
+package com.regexbyte.habittracker.common;
 
 import com.regexbyte.habittracker.Models.Modeforlogin;
 import com.regexbyte.habittracker.Models.RegistrationModel;

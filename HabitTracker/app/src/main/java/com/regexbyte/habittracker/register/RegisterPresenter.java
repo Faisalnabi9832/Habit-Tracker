@@ -6,20 +6,16 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.regexbyte.habittracker.ApiInterface;
-import com.regexbyte.habittracker.ApiUtils;
 import com.regexbyte.habittracker.Base.BasePresenter;
-import com.regexbyte.habittracker.MainActivity.MainActivity;
 import com.regexbyte.habittracker.Models.RegistrationModel;
 import com.regexbyte.habittracker.R;
+import com.regexbyte.habittracker.common.ApiInterface;
+import com.regexbyte.habittracker.common.ApiUtils;
 import com.regexbyte.habittracker.login.LoginActivity;
-import com.regexbyte.habittracker.network.JsonPlaceHolderApi;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RegisterPresenter extends BasePresenter<registerview> {
@@ -83,6 +79,7 @@ public class RegisterPresenter extends BasePresenter<registerview> {
                         @Override
                         public void onResponse(Call<RegistrationModel> call, Response<RegistrationModel> response) {
                             if (response.isSuccessful()) {
+                                progressDialog.dismiss();
                                 RegistrationModel registrationResponse = response.body();
                                 if (registrationResponse != null) {
 
@@ -99,6 +96,7 @@ public class RegisterPresenter extends BasePresenter<registerview> {
 
                         @Override
                         public void onFailure(Call<RegistrationModel> call, Throwable t) {
+                            progressDialog.dismiss();
                             Toast.makeText(context, "Failure" + t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });

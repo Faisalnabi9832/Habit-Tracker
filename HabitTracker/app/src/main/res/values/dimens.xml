@@ -4,6 +4,8 @@
     <dimen name="newsMoreTextSize">12sp</dimen>
     <dimen name="loginViewsMargin">20dp</dimen>
     <dimen name="shr_product_grid_reveal_height">200dp</dimen>
+    <!-- res/values/dimens.xml -->
+    <dimen name="user_image_size">40dp</dimen>
 
     <!--start activity-->
 

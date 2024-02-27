@@ -1,4 +1,4 @@
-package com.regexbyte.habittracker;
+package com.regexbyte.habittracker.common;
 
 
 import retrofit2.Retrofit;
