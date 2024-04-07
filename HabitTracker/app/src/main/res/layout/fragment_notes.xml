@@ -20,7 +20,9 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="@color/black"
-            android:clickable="false"></TextView>
+            android:clickable="false">
+
+        </TextView>
 
         <TextView
             android:id="@+id/createNotesTextView"
@@ -30,7 +32,9 @@
             android:layout_margin="10dp"
             android:textSize="15dp"
             android:textColor="@color/black"
-            android:clickable="false"></TextView>
+            android:clickable="false">
+
+        </TextView>
 
         <TextView
             android:id="@+id/newNotesTextView"
@@ -41,7 +45,9 @@
 
             android:textSize="15dp"
             android:textColor="@color/colorAccent"
-            android:clickable="false"></TextView>
+            android:clickable="false">
+
+        </TextView>
 
     </LinearLayout>
 
@@ -51,7 +57,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/recyclerfornotes"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabnotes"

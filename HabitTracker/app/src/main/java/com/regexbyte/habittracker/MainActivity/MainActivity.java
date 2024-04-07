@@ -155,8 +155,8 @@ public class MainActivity extends BaseActivity<HabitView, HabitPresenter> implem
                 this,
                 view.findViewById(R.id.product_grid),
                 new AccelerateDecelerateInterpolator(),
-                getResources().getDrawable(R.drawable.shr_branded_menu), // Menu open icon
-                getResources().getDrawable(R.drawable.shr_close_menu))); // Menu close icon
+                getResources().getDrawable(R.drawable.shr_branded_menu),
+                getResources().getDrawable(R.drawable.shr_close_menu)));
     }
 
 

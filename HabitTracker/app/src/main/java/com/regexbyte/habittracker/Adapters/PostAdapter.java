@@ -1,43 +1,45 @@
-// PostAdapter.java
-package com.regexbyte.habittracker.Adapters;
 
+package com.regexbyte.habittracker.Adapters;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Handler;
-import android.text.InputType;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.snackbar.Snackbar;
+import com.regexbyte.habittracker.Models.Comment;
 import com.regexbyte.habittracker.Models.PostModel;
 import com.regexbyte.habittracker.R;
-
 import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private List<PostModel> postList;
+
     private Context context;
-    private GestureDetector gestureDetector;
-    private Handler clickHandler;
+    private final GestureDetector gestureDetector;
+    private final Handler clickHandler;
     private boolean isDoubleClick = false;
+    ImageAdapter imageAdapter;
+
+
+    RecyclerView recyclerView;
+    int REQUEST_GALLERY_IMAGE = 1;
 
     public PostAdapter(List<PostModel> postList, Context context) {
         this.postList = postList;
@@ -56,51 +58,122 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PostModel post = postList.get(position);
+        TextView captionTextView = holder.itemView.findViewById(R.id.captionTextView);
+        TextView seeMoreTextView = holder.itemView.findViewById(R.id.seeMoreTextView);
+        TextView seeLessTextView = holder.itemView.findViewById(R.id.seelessTextView);
 
 
+        String caption = "this is 1 line caption" +
+                "this is 2 line caption" +
+                "this is 3 line caption "+
+                "Your 4 text here..." +
+                "Your 5 text here..." +
+                "Your 6 text here..." +
+                "Your 7 text here..." +
+                "Your 8 text here" +
+                        "Your 9 text here"+
+                        "Your 10 text here"+
+                        "Your 11 text here"
+               ;
+        captionTextView.setText(caption);
 
-        holder.postedImageView.setOnTouchListener((v, event) -> {
-            gestureDetector.onTouchEvent(event);
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                if (isDoubleClick) {
-                    handleDoubleClick(post, holder);
-                    isDoubleClick = false;
+        ViewTreeObserver vto = captionTextView.getViewTreeObserver();
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                captionTextView.getViewTreeObserver().removeOnPreDrawListener(this);
+                if (captionTextView.getLineCount() > 1) {
+                    seeMoreTextView.setVisibility(View.VISIBLE);
+                    seeMoreTextView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            captionTextView.setMaxLines(Integer.MAX_VALUE);
+                            seeMoreTextView.setVisibility(View.GONE);
+                            seeLessTextView.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    seeLessTextView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            captionTextView.setMaxLines(3);
+                            seeMoreTextView.setVisibility(View.VISIBLE);
+                            seeLessTextView.setVisibility(View.GONE);
+                        }
+                    });
                 } else {
-                    handleClick(post, holder);
+                    seeMoreTextView.setVisibility(View.GONE);
+                    seeLessTextView.setVisibility(View.GONE);
+                }
+
+                return true;
+            }
+        });
+
+
+// Rest of the onBindViewHolder method remains unchanged
+
+        holder.likeButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the like status
+                post.setLiked(!post.isLiked());
+
+
+                if (post.isLiked()) {
+
+                    holder.likeButton.setVisibility(View.GONE);
+                    holder.likeButton2.setVisibility(View.VISIBLE);
+                } else {
+
+                    holder.likeButton.setVisibility(View.VISIBLE);
+                    holder.likeButton2.setVisibility(View.GONE);
                 }
             }
-            return true;
         });
+
+
+
+
+        RecyclerView imageRecyclerView = holder.itemView.findViewById(R.id.imageRecyclerView);
+        imageRecyclerView.setLayoutManager(new GridLayoutManager(context, 2));
+        ImageAdapter imageAdapter = new ImageAdapter(post.getImageUris(), context);
+        imageRecyclerView.setAdapter(imageAdapter);
+
+
+
+
+//        RecyclerView imageRecyclerView = holder.itemView.findViewById(R.id.imageRecyclerView);
+//        imageRecyclerView.setLayoutManager(new CustomGridLayoutManager(context, 2));
+//        imageRecyclerView.addItemDecoration(new GridSpacingItemDecoration(4, 2));
+//        imageAdapter = new ImageAdapter(post.getImageUris(), context);
+//        imageRecyclerView.setAdapter(imageAdapter);
+
+
+
+        holder.likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                post.setLiked(!post.isLiked());
+                if (post.isLiked()) {
+                    holder.likeButton.setVisibility(View.GONE);
+                    holder.likeButton2.setVisibility(View.VISIBLE);
+                } else {
+                    holder.likeButton.setVisibility(View.VISIBLE);
+                    holder.likeButton2.setVisibility(View.GONE);
+                }
+            }
+        });
+
 
         holder.commentButton.setOnClickListener(v -> showCommentDialog(post, holder));
 
         if (post.hasComments()) {
-            displayComments(post.getComments(), holder);
+            displayComments(post.getComments(), holder.commentsRecyclerView);
+
         }
 
-        holder.userProfileImageView.setImageResource(post.getUserProfileImage());
-        holder.usernameTextView.setText(post.getUsername());
-        holder.postedTimeTextView.setText(post.getPostedTime());
-        holder.postedImageView.setImageResource(post.getPostedImage());
 
-
-        if (post.getAllUserImages() != null && !post.getAllUserImages().isEmpty()) {
-            displayUserImages(post.getFirstFourUserImages(), holder);
-        }
-        if (post.getAllUserImages() != null && !post.getAllUserImages().isEmpty()) {
-            displayUserImages(post.getFirstFourUserImages(), holder);
-        }
-
-        holder.userImagesContainer.setOnClickListener(v -> {
-            try {
-                // Show a dialog with all user images
-                showAllUserImagesDialog(post.getAllUserImages());
-            } catch (Exception e) {
-                Log.e("PostAdapter", "Error showing user images dialog", e);
             }
-        });
-    }
-
 
     @Override
     public int getItemCount() {
@@ -110,27 +183,35 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView userProfileImageView;
-        TextView usernameTextView;
+        TextView usernameTextView,desc;
         TextView postedTimeTextView;
-        ImageView postedImageView;
         ImageButton likeButton,likeButton2;
         ImageButton commentButton;
         TextView commentTextView;
         LinearLayout userImagesContainer;
+        RecyclerView commentsRecyclerView;
 
-        public ViewHolder(@NonNull View itemView) {
+        RecyclerView recyclerView;
+
+        public  ViewHolder(@NonNull View itemView) {
             super(itemView);
             userProfileImageView = itemView.findViewById(R.id.userProfileImageView);
             usernameTextView = itemView.findViewById(R.id.usernameTextView);
             postedTimeTextView = itemView.findViewById(R.id.postedTimeTextView);
-            postedImageView = itemView.findViewById(R.id.postedImageView);
+            recyclerView = itemView.findViewById(R.id.imageRecyclerView);
             likeButton = itemView.findViewById(R.id.likeButton);
             likeButton2 = itemView.findViewById(R.id.likeButton2);
             commentButton = itemView.findViewById(R.id.commentButton);
             commentTextView = itemView.findViewById(R.id.commentTextView);
+
+//            imageItem=itemView.findViewById(R.id.childImageItem2);
             userImagesContainer = itemView.findViewById(R.id.userImagesContainer);
             userImagesContainer.setClickable(true);
             userImagesContainer.setFocusable(true);
+
+
+
+
         }
     }
 
@@ -147,42 +228,61 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
     }
 
+
     private void showCommentDialog(PostModel post, ViewHolder holder) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Write a Comment");
 
-        final EditText input = new EditText(context);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.comment_dialog_layout, null);
 
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            String userInput = input.getText().toString().trim();
-            post.addComment(userInput);
-            notifyDataSetChanged();
+        RecyclerView commentsRecyclerView = dialogView.findViewById(R.id.commentsRecyclerView);
+        EditText commentEditText = dialogView.findViewById(R.id.commentEditText);
+        Button postCommentButton = dialogView.findViewById(R.id.postCommentButton);
+
+
+        displayComments(post.getComments(), commentsRecyclerView);
+
+
+        postCommentButton.setOnClickListener(view -> {
+            String newComment = commentEditText.getText().toString();
+            if (!TextUtils.isEmpty(newComment)) {
+
+                Comment newCommentObject = new Comment(R.drawable.profilepic, "khan", newComment);
+
+                post.addComment(newCommentObject);
+                displayComments(post.getComments(), commentsRecyclerView);
+
+
+
+
+                Snackbar.make(holder.itemView, "Comment posted", Snackbar.LENGTH_SHORT).show();
+            }
         });
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
-        builder.show();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
-    private void displayComments(List<String> comments, ViewHolder holder) {
-        StringBuilder commentsText = new StringBuilder();
-        for (String comment : comments) {
-            commentsText.append(comment).append("\n");
-        }
-        holder.commentTextView.setText(commentsText.toString());
-        holder.commentTextView.setVisibility(View.VISIBLE);
+
+    private void displayComments(List<Comment> comments, RecyclerView recyclerView) {
+
+        CommentAdapter adapter = new CommentAdapter(comments);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
     }
+
+
 
     private void handleDoubleClick(PostModel post, ViewHolder holder) {
         post.setLiked(!post.isLiked());
 
         if (post.isLiked()) {
-            // Liked, make red heart visible
+
             holder.likeButton.setVisibility(View.GONE);
             holder.likeButton2.setVisibility(View.VISIBLE);
         } else {
-            // Unliked, make simple heart visible
+
             holder.likeButton.setVisibility(View.VISIBLE);
             holder.likeButton2.setVisibility(View.GONE);
         }
@@ -191,147 +291,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
 
     private void handleClick(PostModel post, ViewHolder holder) {
-        int updatedLikeButtonColor = post.isLiked() ? R.color.colorAccent : R.color.whiteTextColor;
-        holder.likeButton.setColorFilter(ContextCompat.getColor(context, updatedLikeButtonColor));
-        // Handle single-click action, if needed
-    }
+        if (post.isLiked()) {
 
-    private void displayUserImages(List<Integer> userImages, ViewHolder holder) {
-        try {
-            Log.d("PostAdapter", "Displaying user images");
-            holder.userImagesContainer.removeAllViews();
+            holder.likeButton.setVisibility(View.GONE);
+            holder.likeButton2.setVisibility(View.VISIBLE);
+        } else {
 
-            int maxImagesToShow = 4; // Set the maximum number of images to show initially
-
-            for (int i = 0; i < userImages.size(); i++) {
-                CircleImageView userImageView = new CircleImageView(context);
-                userImageView.setLayoutParams(new ViewGroup.LayoutParams(
-                        (int) context.getResources().getDimension(R.dimen.user_image_size),
-                        (int) context.getResources().getDimension(R.dimen.user_image_size)));
-                userImageView.setImageResource(userImages.get(i));
-                holder.userImagesContainer.addView(userImageView);
-
-                if (i == maxImagesToShow - 1 && userImages.size() > maxImagesToShow) {
-                    // Show a stacked view indicating more users
-                    CircleImageView stackedView = new CircleImageView(context);
-                    stackedView.setLayoutParams(new ViewGroup.LayoutParams(
-                            (int) context.getResources().getDimension(R.dimen.user_image_size),
-                            (int) context.getResources().getDimension(R.dimen.user_image_size)));
-                    stackedView.setImageResource(R.drawable.layer); // Replace with your stacked image resource
-                    stackedView.setPadding(10, 10, 10, 10);
-                    stackedView.setOnClickListener(v -> {
-                        try {
-                            // Show a dialog with all user images
-                            showAllUserImagesDialog(userImages);
-                        } catch (Exception e) {
-                            Log.e("PostAdapter", "Error showing user images dialog", e);
-                        }
-                    });
-                    holder.userImagesContainer.addView(stackedView);
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            Log.e("PostAdapter", "Error displaying user images", e);
+            holder.likeButton.setVisibility(View.VISIBLE);
+            holder.likeButton2.setVisibility(View.GONE);
         }
     }
-    private void showAllUserImagesDialog(List<Integer> userImages) {
-        try {
-            Log.d("PostAdapter", "showAllUserImagesDialog called");
-            Log.d("PostAdapter", "UserImages size: " + userImages.size());
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Users who viewed the post");
-
-            LinearLayout dialogLayout = new LinearLayout(context);
-            dialogLayout.setOrientation(LinearLayout.VERTICAL);
-
-            int maxVisibleImages = 4;  // Maximum number of images to be visible initially
-            int totalImages = userImages.size();
-
-            LinearLayout stackedLayout = new LinearLayout(context);
-            stackedLayout.setOrientation(LinearLayout.VERTICAL);
-
-            for (int i = 0; i < totalImages; i++) {
-                CircleImageView userImageView = new CircleImageView(context);
-                userImageView.setLayoutParams(new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                userImageView.setImageResource(userImages.get(i));
-
-                // Add username below the user image
-                TextView usernameTextView = new TextView(context);
-                usernameTextView.setLayoutParams(new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                usernameTextView.setText("User Name"); // Replace with actual username
-
-                LinearLayout stackLayout = new LinearLayout(context);
-                stackLayout.setOrientation(LinearLayout.VERTICAL);
-
-                stackLayout.addView(userImageView);
-                stackLayout.addView(usernameTextView);
-
-                if (i < maxVisibleImages) {
-                    stackedLayout.addView(stackLayout);
-                } else {
-                    // For images beyond the maxVisibleImages, hide the stackLayout
-                    stackLayout.setVisibility(View.GONE);
-                }
-
-                // Set a click listener on each user image to show a detailed dialog
-                final int currentIndex = i;
-                userImageView.setOnClickListener(v -> {
-                    Toast.makeText(context, "Viewer clicked", Toast.LENGTH_SHORT).show();
-                    // Implement the action to show a detailed dialog with profile name and image
-                    showUserProfileDialog("Faisl nabi", userImages.get(currentIndex)); // Replace with actual user details
-                });
-            }
-
-            dialogLayout.addView(stackedLayout);
-
-            // Add a "+5" button if there are more than maxVisibleImages images
-            if (totalImages > maxVisibleImages) {
-                Button showMoreButton = new Button(context);
-                showMoreButton.setText("+5");
-                showMoreButton.setOnClickListener(v -> {
-                    // Show the next five hidden images
-                    for (int i = maxVisibleImages; i < maxVisibleImages + 5 && i < totalImages; i++) {
-                        stackedLayout.getChildAt(i).setVisibility(View.VISIBLE);
-                    }
-                    showMoreButton.setVisibility(View.GONE);
-                });
-                dialogLayout.addView(showMoreButton);
-            }
-
-            builder.setView(dialogLayout);
-
-            builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
-
-            builder.show();
-        } catch (Exception e) {
-            Log.e("PostAdapter", "Error in showAllUserImagesDialog", e);
-        }
+    public interface OnProfileClickListener {
+        void onProfileClicked(List<Uri> imageUris);
     }
 
 
-    // Method to show a detailed dialog with profile name and image
-    private void showUserProfileDialog(String userName, int userImageResource) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(userName);
-
-        CircleImageView userImageView = new CircleImageView(context);
-        userImageView.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-        userImageView.setImageResource(userImageResource);
-
-        builder.setView(userImageView);
-
-        builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
-
-        builder.show();
-    }
 
 
 }

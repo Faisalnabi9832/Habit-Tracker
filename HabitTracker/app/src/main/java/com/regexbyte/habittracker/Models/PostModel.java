@@ -1,6 +1,8 @@
 // PostModel.java
 package com.regexbyte.habittracker.Models;
 
+import android.net.Uri;
+
 import com.regexbyte.habittracker.R;
 
 import java.util.ArrayList;
@@ -12,34 +14,58 @@ public class PostModel {
     private int userProfileImage;
     private int postedImage;
     private boolean isLiked;
-    private List<String> comments;
-    private List<Integer> allUserImages;
+    private List<Comment> comments;
 
-    public PostModel(String username, String postedTime, int userProfileImage, int postedImage, boolean isLiked) {
+    private List<Uri> imageUris;
+    private boolean likeButtonVisible;
+
+
+    public PostModel(String username, String postedTime, int userProfileImage, int postedImage, boolean isLiked,List<Uri> imageUris) {
         this.username = username;
         this.postedTime = postedTime;
         this.userProfileImage = userProfileImage;
         this.postedImage = postedImage;
         this.isLiked = isLiked;
         this.comments = new ArrayList<>();
-        this.allUserImages = generateDummyViewers(); // Initialize dummy viewers
+        this.likeButtonVisible = false;
+
+        this.imageUris=imageUris;
+
+    }
+
+    public List<Uri> getImageUris() {
+        return imageUris;
+    }
+
+    public void setImageUris(List<Uri> imageUris) {
+        this.imageUris = imageUris;
     }
 
     public boolean isLiked() {
         return isLiked;
+    }
+    public boolean isLikeButtonVisible() {
+        return likeButtonVisible;
+    }
+
+    public void toggleLikeButtonVisibility() {
+        likeButtonVisible = !likeButtonVisible;
     }
 
     public void setLiked(boolean liked) {
         isLiked = liked;
     }
 
-    public List<String> getComments() {
+
+
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void addComment(String comment) {
-        comments.add(comment);
+    public void addComment(Comment newComment) {
+        comments.add(newComment);
     }
+
 
     public String getUsername() {
         return username;
@@ -65,21 +91,9 @@ public class PostModel {
         return comments != null && !comments.isEmpty();
     }
 
-    public List<Integer> getAllUserImages() {
-        return allUserImages;
-    }
 
-    public void addAllUserImage(int userImage) {
-        allUserImages.add(userImage);
-    }
 
-    public List<Integer> getFirstFourUserImages() {
-        if (allUserImages.size() > 4) {
-            return allUserImages.subList(0, 4);
-        } else {
-            return allUserImages;
-        }
-    }
+
 
     private List<Integer> generateDummyViewers() {
         List<Integer> dummyViewers = new ArrayList<>();

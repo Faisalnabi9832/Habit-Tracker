@@ -19,11 +19,11 @@
         android:id="@+id/deleteButtonfornotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:contentDescription="Delete"
         android:src="@drawable/delete16"
         app:layout_constraintBottom_toBottomOf="@+id/textViewNote"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

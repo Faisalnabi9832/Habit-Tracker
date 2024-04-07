@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.tabs.TabLayout;
 import com.regexbyte.habittracker.Utils.ViewPager;
+import com.regexbyte.habittracker.Utils.ViewPagerforprofile;
 import com.regexbyte.habittracker.fragmnet.DailyFragmnet.Dailyfragment;
 
 public class HabitgoalActivity extends AppCompatActivity {
@@ -30,7 +31,7 @@ public class HabitgoalActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(HabitgoalActivity.this, HabitGoalActivity2.class);
+                Intent intent = new Intent(HabitgoalActivity.this, HabitgoalActivity2.class);
                 startActivity(intent);
             }
         });

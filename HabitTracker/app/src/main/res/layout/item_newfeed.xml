@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/whiteTextColor"
-    android:padding="16dp">
+    android:padding="20dp"
+    android:background="@color/whiteTextColor">
 
 
     <LinearLayout
@@ -17,7 +16,7 @@
             android:id="@+id/userProfileImageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/facebook"/>
+            android:src="@drawable/profilepic"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,30 +36,63 @@
                 android:id="@+id/postedTimeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2 hours ago"
+                android:text="@string/_2_hours_ago"
                 android:textColor="@android:color/darker_gray"/>
         </LinearLayout>
     </LinearLayout>
-
-
-    <androidx.cardview.widget.CardView
+    <!-- Other existing code -->
+    <TextView
+        android:id="@+id/captionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:cardCornerRadius="10dp">
+        android:text="Your caption text here."
+        android:textColor="@color/black"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:layout_marginTop="8dp"/>
 
-        <ImageView
-            android:id="@+id/postedImageView"
+    <TextView
+        android:id="@+id/seeMoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See more"
+        android:textColor="@color/colorPrimary"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/seelessTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See less"
+        android:textColor="@color/colorPrimary"
+        android:visibility="gone"/>
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imageRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:scaleType="centerCrop"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            />
 
-            android:src="@drawable/profilepic"/>
-
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
 
-    <!-- Action buttons -->
+
+
+
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,18 +125,18 @@
            android:background="@drawable/chat"/>
 
 
-
         <LinearLayout
             android:id="@+id/userImagesContainer"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="10dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:layout_marginEnd="16dp">
         </LinearLayout>
+
 
 
     </LinearLayout>
@@ -116,7 +148,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="@color/black"
-        android:visibility="gone" />
+        android:visibility="visible" />
     <TextView
         android:id="@+id/likeCountTextView"
         android:layout_width="wrap_content"

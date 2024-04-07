@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.appcompat.widget.SearchView;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,14 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.regexbyte.habittracker.Adapters.AddhabitAdapter;
 import com.regexbyte.habittracker.Base.BaseActivity;
 import com.regexbyte.habittracker.HabitgoalActivity;
-import com.regexbyte.habittracker.MainActivity.MainActivity;
 import com.regexbyte.habittracker.Models.AddhabitModel;
 import com.regexbyte.habittracker.R;
-import com.regexbyte.habittracker.login.LoginActivity;
-
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+
+
 
 public class Addhabitactivity extends BaseActivity<AddHabitView, AddhabitPresenter> implements AddHabitView ,AddhabitAdapter.OnItemClickListener{
     private RecyclerView recyclerView;

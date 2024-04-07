@@ -30,7 +30,10 @@
             app:title="@string/addhabit" >
 
 
+
+
         </androidx.appcompat.widget.Toolbar>
+
 
 
 

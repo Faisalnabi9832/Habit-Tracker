@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.regexbyte.habittracker.Models.Modelfornotes;
 import com.regexbyte.habittracker.R;
@@ -26,20 +27,12 @@ public class DialogforNotes extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.dialogfornotes, container, false);
 
         editTextnotes = rootView.findViewById(R.id.edtfordialognotes);
         buttonSaveNotes = rootView.findViewById(R.id.buttonSaveNotes);
         imageViewClose = rootView.findViewById(R.id.imageViewClose);
-
-        buttonSaveNotes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSaveNotes();
-            }
-        });
 
         imageViewClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,16 +41,17 @@ public class DialogforNotes extends DialogFragment {
             }
         });
 
+        buttonSaveNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String notesText = editTextnotes.getText().toString();
+                Modelfornotes notes = new Modelfornotes(notesText);
+                dialogListener.onSaveNotes(notes);
+                dismiss();
+            }
+        });
+
         return rootView;
-    }
-
-    private void onSaveNotes() {
-        String notesText = editTextnotes.getText().toString();
-
-        Modelfornotes notes = new Modelfornotes(notesText);
-        dialogListener.onSaveNotes(notes);
-
-        dismiss();
     }
 
     public interface MyDialogListener {

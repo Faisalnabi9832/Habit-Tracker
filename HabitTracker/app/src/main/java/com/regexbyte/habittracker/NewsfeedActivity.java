@@ -3,6 +3,7 @@ package com.regexbyte.habittracker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.net.Uri;
 import android.os.Bundle;
 import com.regexbyte.habittracker.Adapters.PostAdapter;
 import com.regexbyte.habittracker.Adapters.StoryAdapter;
@@ -14,7 +15,13 @@ import java.util.List;
 
 
 
+
 public class NewsfeedActivity extends AppCompatActivity {
+
+
+    private static final int REQUEST_GALLERY_IMAGE = 1;
+    List<StoryModel> storyList;
+    StoryAdapter storyAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +30,12 @@ public class NewsfeedActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.newsfeedRecyclerView);
 
         List<StoryModel> storyList = new ArrayList<>();
-        storyList.add(new StoryModel(R.drawable.profilepic, "Faisal Nabi",true));
-        storyList.add(new StoryModel(R.drawable.profilepic, "Kaleem",true));
-        storyList.add(new StoryModel(R.drawable.profilepic, "anas",true));
-        storyList.add(new StoryModel(R.drawable.profilepic, "majid",true));
-        storyList.add(new StoryModel(R.drawable.profilepic, "bacha",true));
-        storyList.add(new StoryModel(R.drawable.profilepic, "huzaifa",true));
+        storyList.add(new StoryModel(R.drawable.profilepic, "Faisal Nabi",true,1));
+        storyList.add(new StoryModel(R.drawable.profilepic, "Kaleem",true,2));
+        storyList.add(new StoryModel(R.drawable.profilepic, "Anas",true,3));
+        storyList.add(new StoryModel(R.drawable.profilepic, "majid",true,4));
+        storyList.add(new StoryModel(R.drawable.profilepic, "bacha",true,5));
+        storyList.add(new StoryModel(R.drawable.profilepic, "huzaifa",true,6));
 
         StoryAdapter storyAdapter = new StoryAdapter(storyList, this);
 
@@ -38,27 +45,49 @@ public class NewsfeedActivity extends AppCompatActivity {
       recyclerView.setAdapter(storyAdapter);
 
 
-        RecyclerView recyclerView2 = findViewById(R.id.newsfeedRecyclerViewforpost);
+        RecyclerView recyclerViewfopost = findViewById(R.id.newsfeedRecyclerViewforpost);
         ArrayList<PostModel> postList = generateDummyPostData();
         PostAdapter adapter = new PostAdapter(postList, this);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
         layoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView2.setLayoutManager(layoutManager2);
-        recyclerView2.setAdapter(adapter);
-
-
+        recyclerViewfopost.setLayoutManager(layoutManager2);
+        recyclerViewfopost.setAdapter(adapter);
     }
+
     public ArrayList<PostModel> generateDummyPostData() {
         ArrayList<PostModel> dummyData = new ArrayList<>();
+        List<Uri> dummyImageUris = generateDummyImageUris();  // Implement this method to generate dummy URIs
+        PostModel postModel = new PostModel("Username", "2 hours ago", R.drawable.profilepic, R.drawable.profilepic, false, dummyImageUris);
+        PostModel postModel1 = new PostModel("Username", "2 hours ago", R.drawable.profilepic, R.drawable.profilepic, false, dummyImageUris);
+        PostModel postModel2 = new PostModel("Username", "2 hours ago", R.drawable.profilepic, R.drawable.profilepic, false, dummyImageUris);
 
+        dummyData.add(postModel);
+        dummyData.add(postModel1);
+        dummyData.add(postModel2);
 
-        dummyData.add(new PostModel("Faisal Nabi","2 hours ago",R.drawable.profilepic,R.drawable.profilepic,false));
-        dummyData.add(new PostModel("Faisal Nabi","2 hours ago",R.drawable.profilepic,R.drawable.profilepic,false));
-        dummyData.add(new PostModel("Faisal Nabi","2 hours ago",R.drawable.profilepic,R.drawable.profilepic,false));
-        dummyData.add(new PostModel("Faisal Nabi","2 hours ago",R.drawable.profilepic,R.drawable.profilepic,false));
-        dummyData.add(new PostModel("Faisal Nabi","2 hours ago",R.drawable.profilepic,R.drawable.profilepic,false));
-        dummyData.add(new PostModel("Faisal Nabi","2 hours ago",R.drawable.profilepic,R.drawable.profilepic,false));
 
         return dummyData;
     }
+
+
+    private List<Uri> generateDummyImageUris() {
+        List<Uri> dummyImageUris = new ArrayList<>();
+
+//        dummyImageUris.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.profilepic));
+        dummyImageUris.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.profilepic));
+        dummyImageUris.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.profilepic));
+//        dummyImageUris.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.profilepic));
+//        dummyImageUris.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.profilepic));
+//        dummyImageUris.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.profilepic));
+//        dummyImageUris.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.profilepic));
+//        dummyImageUris.add(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.profilepic));
+
+
+
+        return dummyImageUris;
     }
+
+}
+
+
+

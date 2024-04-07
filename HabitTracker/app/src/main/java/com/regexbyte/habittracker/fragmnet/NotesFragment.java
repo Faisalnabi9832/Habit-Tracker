@@ -1,20 +1,26 @@
 package com.regexbyte.habittracker.fragmnet;
+
 import android.os.Bundle;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.regexbyte.habittracker.Adapters.NotesAdapter;
 import com.regexbyte.habittracker.Models.Modelfornotes;
 import com.regexbyte.habittracker.R;
 import com.regexbyte.habittracker.Dialog.DialogforNotes;
+import com.skydoves.balloon.ArrowOrientation;
+import com.skydoves.balloon.Balloon;
+import com.skydoves.balloon.BalloonAnimation;
+import com.skydoves.balloon.BalloonSizeSpec;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,19 +29,18 @@ public class NotesFragment extends Fragment implements DialogforNotes.MyDialogLi
     private List<Modelfornotes> notesList;
     private NotesAdapter notesAdapter;
     private FloatingActionButton fabNotes;
-    RecyclerView  recyclerfornotes;
-    private boolean isClockwiseRotation = true;
+    private RecyclerView recyclerfornotes;
     private TextView noNotesTextView;
     private TextView createNotesTextView;
     private TextView newNotesTextView;
+    private LifecycleOwner lifecycleOwner;
 
     public NotesFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_notes, container, false);
         recyclerfornotes = rootView.findViewById(R.id.recyclerfornotes);
         recyclerfornotes.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -44,60 +49,51 @@ public class NotesFragment extends Fragment implements DialogforNotes.MyDialogLi
         notesAdapter.setListener(this);
         recyclerfornotes.setAdapter(notesAdapter);
 
-
-
         fabNotes = rootView.findViewById(R.id.fabnotes);
         noNotesTextView = rootView.findViewById(R.id.noNotesTextView);
         createNotesTextView = rootView.findViewById(R.id.createNotesTextView);
         newNotesTextView = rootView.findViewById(R.id.newNotesTextView);
 
-
         fabNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rotateFab();
-                openNotesDialog();
+                openNotesBalloon();
             }
         });
+
         newNotesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNotesDialog();
-
+                openNotesBalloon();
             }
         });
+
         updateViewVisibility();
 
         return rootView;
     }
 
-    private void rotateFab() {
-        float fromDegrees, toDegrees;
-
-        if (isClockwiseRotation) {
-            fromDegrees = 300;
-            toDegrees =0;
-        } else {
-            fromDegrees = 300;
-            toDegrees = 0;
-        }
-
-        RotateAnimation rotateAnimation = new RotateAnimation(
-                fromDegrees, toDegrees,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f);
-        rotateAnimation.setDuration(300);
-        rotateAnimation.setFillAfter(true);
-        fabNotes.startAnimation(rotateAnimation);
-
-        isClockwiseRotation = !isClockwiseRotation;
+    private void openNotesBalloon() {
+        Balloon balloon = new Balloon.Builder(getContext())
+                .setLayout(R.layout.dialogfornotes)
+                .setArrowSize(10)
+                .setArrowOrientation(ArrowOrientation.TOP)
+                .setWidthRatio(0.55f)
+                .setHeight(BalloonSizeSpec.WRAP)
+                .setCornerRadius(4f)
+                .setBackgroundColor(ContextCompat.getColor(getContext(), R.color.black))
+                .setBalloonAnimation(BalloonAnimation.ELASTIC)
+                .setLifecycleOwner(lifecycleOwner)
+                .build();
+        balloon.showAlignTop(fabNotes);
     }
 
-    private void openNotesDialog() {
-        DialogforNotes notesDialog = new DialogforNotes(this);
-        notesDialog.show(getParentFragmentManager(), "NotesDialog");
+    @Override
+    public void onSaveNotes(Modelfornotes notes) {
+        notesList.add(notes);
+        notesAdapter.notifyDataSetChanged();
+        updateViewVisibility();
     }
-
     public void onDeleteClick(int position) {
         if (position >= 0 && position < notesList.size()) {
             notesList.remove(position);
@@ -108,12 +104,6 @@ public class NotesFragment extends Fragment implements DialogforNotes.MyDialogLi
         }
     }
 
-    @Override
-    public void onSaveNotes(Modelfornotes notes) {
-        notesList.add(notes);
-        notesAdapter.notifyDataSetChanged();
-        updateViewVisibility();
-    }
     private void updateViewVisibility() {
         if (notesList.isEmpty()) {
             recyclerfornotes.setVisibility(View.GONE);

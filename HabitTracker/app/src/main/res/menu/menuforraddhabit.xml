@@ -10,16 +10,4 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|ifRoom" />
 
-    <item
-        android:id="@+id/nextItem"
-        android:title="Next"
-        app:showAsAction="ifRoom">
-        <menu>
-            <item
-                android:id="@+id/next"
-                android:title="Next"
-                app:showAsAction="always" />
-        </menu>
-    </item>
-
 </menu>

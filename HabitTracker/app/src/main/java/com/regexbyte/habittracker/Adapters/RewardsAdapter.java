@@ -19,8 +19,8 @@ import java.util.List;
 
 public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.ViewHolder> {
 
-    private Context context;
-    private List<ModelforRewards> rewardsList;
+    private final Context context;
+    private final List<ModelforRewards> rewardsList;
     private RewardsAdapterListener listener;
 
     public RewardsAdapter(Context context, List<ModelforRewards> rewardsList) {
